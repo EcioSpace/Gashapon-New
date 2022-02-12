@@ -8,17 +8,29 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract RandomRateLTD is Ownable {
     using Strings for string;
     uint16 private constant NFT_TYPE = 0; //Kingdom
-
+    uint16 private constant KINGDOM = 1; //Kingdom
+    uint16 private constant TRANING_CAMP = 2; //Training Camp
+    uint16 private constant GEAR = 3; //Battle Gear
+    uint16 private constant DRO = 4; //Battle DRO
     uint16 private constant SUITE = 5; //Battle Suit
-    uint16 private constant WEAP = 8; //WEAP
+    uint16 private constant BOT = 6; //Battle Bot
     uint16 private constant GEN = 7; //Human GEN
-
+    uint16 private constant WEAP = 8; //WEAP
+    uint16 private constant COMBAT_RANKS = 9; //Combat Ranks
+    uint16 private constant BLUEPRINT_COMM = 0;
+    uint16 private constant BLUEPRINT_RARE = 1;
+    uint16 private constant BLUEPRINT_EPIC = 2;
+    uint16 private constant GENOMIC_COMMON = 3;
+    uint16 private constant GENOMIC_RARE = 4;
+    uint16 private constant GENOMIC_EPIC = 5;
     uint16 private constant SPACE_WARRIOR = 6;
-
+    uint16 private constant COMMON_BOX = 0;
+    uint16 private constant RARE_BOX = 1;
+    uint16 private constant EPIC_BOX = 2;
+    uint16 private constant SPECIAL_BOX = 3;
     uint16 private constant COMMON = 0;
     uint16 private constant RARE = 1;
     uint16 private constant EPIC = 2;
-    uint16 private constant LEGENDARY = 3;
 
     //EPool
     mapping(uint16 => uint16) public EPool;
@@ -29,12 +41,37 @@ contract RandomRateLTD is Ownable {
 
     function initial() public onlyOwner {
         
+        EPool[0] = GEAR; //Battle Gear
+        EPool[1] = DRO; //Battle DRO
         EPool[2] = SUITE; //Battle Suit
+        EPool[3] = BOT; //Battle Bot
         EPool[4] = WEAP; //WEAP
 
         //-----------------START COMMON BOX RATE --------------------------------
     
         //SW
+        SWPoolResults[TRANING_CAMP] = [0, 1, 2, 3, 4];
+        SWPoolPercentage[TRANING_CAMP] = [
+            uint256(2000),
+            uint256(2000),
+            uint256(2000),
+            uint256(2000),
+            uint256(2000)
+        ];
+
+        for (
+            uint16 p = 0;
+            p < SWPoolPercentage[TRANING_CAMP].length;
+            p++
+        ) {
+            uint256 qtyItem = (100 *
+                SWPoolPercentage[TRANING_CAMP][p]) / 10000;
+            for (uint16 i = 0; i < qtyItem; i++) {
+                SWPoolValues[TRANING_CAMP].push(
+                    SWPoolResults[TRANING_CAMP][p]
+                );
+            }
+        }
 
         SWPoolResults[SUITE] = [0, 1, 2];
         SWPoolPercentage[SUITE] = [
