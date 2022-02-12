@@ -40,6 +40,7 @@ contract RandomRateLTD is Ownable {
     mapping(uint16 => uint256[]) SWPoolPercentage;
 
     function initial() public onlyOwner {
+        
         EPool[0] = GEAR; //Battle Gear
         EPool[1] = DRO; //Battle DRO
         EPool[2] = SUITE; //Battle Suit
@@ -47,7 +48,7 @@ contract RandomRateLTD is Ownable {
         EPool[4] = WEAP; //WEAP
 
         //-----------------START COMMON BOX RATE --------------------------------
-
+    
         //SW
         SWPoolResults[TRANING_CAMP] = [0, 1, 2, 3, 4];
         SWPoolPercentage[TRANING_CAMP] = [
@@ -58,258 +59,91 @@ contract RandomRateLTD is Ownable {
             uint256(2000)
         ];
 
-        for (uint16 p = 0; p < SWPoolPercentage[TRANING_CAMP].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[TRANING_CAMP][p]) / 10000;
+        for (
+            uint16 p = 0;
+            p < SWPoolPercentage[TRANING_CAMP].length;
+            p++
+        ) {
+            uint256 qtyItem = (100 *
+                SWPoolPercentage[TRANING_CAMP][p]) / 10000;
             for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[TRANING_CAMP].push(SWPoolResults[TRANING_CAMP][p]);
+                SWPoolValues[TRANING_CAMP].push(
+                    SWPoolResults[TRANING_CAMP][p]
+                );
             }
         }
 
-        SWPoolResults[GEAR] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        SWPoolPercentage[GEAR] = [
-            uint256(7200),
-            uint256(625),
-            uint256(625),
-            uint256(625),
-            uint256(625),
-            uint256(95),
-            uint256(95),
-            uint256(95),
-            uint256(5),
-            uint256(5),
-            uint256(5)
-        ];
-        for (uint16 p = 0; p < SWPoolPercentage[GEAR].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[GEAR][p]) / 10000;
-            for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[GEAR].push(SWPoolResults[GEAR][p]);
-            }
-        }
-
-        SWPoolResults[DRO] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        SWPoolPercentage[DRO] = [
-            uint256(7200),
-            uint256(625),
-            uint256(625),
-            uint256(625),
-            uint256(625),
-            uint256(95),
-            uint256(95),
-            uint256(95),
-            uint256(5),
-            uint256(5),
-            uint256(5)
-        ];
-        for (uint16 p = 0; p < SWPoolPercentage[DRO].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[DRO][p]) / 10000;
-            for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[DRO].push(SWPoolResults[DRO][p]);
-            }
-        }
-
-        SWPoolResults[SUITE] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        SWPoolResults[SUITE] = [0, 1, 2];
         SWPoolPercentage[SUITE] = [
-            uint256(2450),
-            uint256(2450),
-            uint256(2450),
-            uint256(750),
-            uint256(750),
-            uint256(750),
-            uint256(100),
-            uint256(100),
-            uint256(100),
-            uint256(100)
+            uint256(3333),
+            uint256(3333),
+            uint256(3333)
         ];
 
-        for (uint16 p = 0; p < SWPoolPercentage[SUITE].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[SUITE][p]) / 10000;
+        for (
+            uint16 p = 0;
+            p < SWPoolPercentage[SUITE].length;
+            p++
+        ) {
+            uint256 qtyItem = (100 * SWPoolPercentage[SUITE][p]) /
+                10000;
             for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[SUITE].push(SWPoolResults[SUITE][p]);
+                SWPoolValues[SUITE].push(
+                    SWPoolResults[SUITE][p]
+                );
             }
         }
-
-        SWPoolResults[BOT] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        SWPoolPercentage[BOT] = [
-            uint256(7200),
-            uint256(625),
-            uint256(625),
-            uint256(625),
-            uint256(625),
-            uint256(95),
-            uint256(95),
-            uint256(95),
-            uint256(5),
-            uint256(5),
-            uint256(5)
-        ];
-
-        for (uint16 p = 0; p < SWPoolPercentage[BOT].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[BOT][p]) / 10000;
-            for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[BOT].push(SWPoolResults[BOT][p]);
-            }
-        }
-
-        SWPoolResults[GEN] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        
+        // 786 common / 583 rare / 125 epic / 500 Limited
+        SWPoolResults[GEN] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 21];
         SWPoolPercentage[GEN] = [
-            uint256(1143),
-            uint256(1143),
-            uint256(1143),
-            uint256(1143),
-            uint256(1143),
-            uint256(1143),
-            uint256(1142),
-            uint256(334),
-            uint256(334),
-            uint256(333),
-            uint256(333),
-            uint256(333),
-            uint256(333)
+            uint256(786),
+            uint256(786),
+            uint256(786),
+            uint256(786),
+            uint256(786),
+            uint256(786),
+            uint256(786),
+            uint256(583),
+            uint256(583),
+            uint256(583),
+            uint256(583),
+            uint256(583),
+            uint256(583),
+            uint256(125),
+            uint256(125),
+            uint256(125),
+            uint256(125),
+            uint256(500)
         ];
 
         for (uint16 p = 0; p < SWPoolPercentage[GEN].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[GEN][p]) / 10000;
+            uint256 qtyItem = (100 * SWPoolPercentage[GEN][p]) /
+                10000;
             for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[GEN].push(SWPoolResults[GEN][p]);
+                SWPoolValues[GEN].push(
+                    SWPoolResults[GEN][p]
+                );
             }
         }
 
-        SWPoolResults[WEAP] = [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14
-        ];
+        
+        SWPoolResults[WEAP] = [0, 1, 2, 3];
         SWPoolPercentage[WEAP] = [
-            uint256(1735),
-            uint256(1735),
-            uint256(1735),
-            uint256(1735),
-            uint256(600),
-            uint256(600),
-            uint256(600),
-            uint256(600),
-            uint256(600),
-            uint256(10),
-            uint256(10),
-            uint256(10),
-            uint256(10),
-            uint256(10),
-            uint256(10)
+            uint256(2500),
+            uint256(2500),
+            uint256(2500),
+            uint256(2500)
         ];
-
         for (uint16 p = 0; p < SWPoolPercentage[WEAP].length; p++) {
-            uint256 qtyItem = (100 * SWPoolPercentage[WEAP][p]) / 10000;
+            uint256 qtyItem = (100 * SWPoolPercentage[WEAP][p]) /
+                10000;
             for (uint16 i = 0; i < qtyItem; i++) {
-                SWPoolValues[WEAP].push(SWPoolResults[WEAP][p]);
+                SWPoolValues[WEAP].push(
+                    SWPoolResults[WEAP][p]
+                );
             }
         }
-
-        // //SW
-        // SWPoolResults[TRANING_CAMP] = [0, 1, 2, 3, 4];
-        // SWPoolPercentage[TRANING_CAMP] = [
-        //     uint256(2000),
-        //     uint256(2000),
-        //     uint256(2000),
-        //     uint256(2000),
-        //     uint256(2000)
-        // ];
-
-        // for (
-        //     uint16 p = 0;
-        //     p < SWPoolPercentage[TRANING_CAMP].length;
-        //     p++
-        // ) {
-        //     uint256 qtyItem = (100 *
-        //         SWPoolPercentage[TRANING_CAMP][p]) / 10000;
-        //     for (uint16 i = 0; i < qtyItem; i++) {
-        //         SWPoolValues[TRANING_CAMP].push(
-        //             SWPoolResults[TRANING_CAMP][p]
-        //         );
-        //     }
-        // }
-
-        // SWPoolResults[SUITE] = [0, 1, 2];
-        // SWPoolPercentage[SUITE] = [
-        //     uint256(3333),
-        //     uint256(3333),
-        //     uint256(3333)
-        // ];
-
-        // for (
-        //     uint16 p = 0;
-        //     p < SWPoolPercentage[SUITE].length;
-        //     p++
-        // ) {
-        //     uint256 qtyItem = (100 * SWPoolPercentage[SUITE][p]) /
-        //         10000;
-        //     for (uint16 i = 0; i < qtyItem; i++) {
-        //         SWPoolValues[SUITE].push(
-        //             SWPoolResults[SUITE][p]
-        //         );
-        //     }
-        // }
-
-        // // 786 common / 583 rare / 125 epic / 500 Limited
-        // SWPoolResults[GEN] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 21];
-        // SWPoolPercentage[GEN] = [
-        //     uint256(786),
-        //     uint256(786),
-        //     uint256(786),
-        //     uint256(786),
-        //     uint256(786),
-        //     uint256(786),
-        //     uint256(786),
-        //     uint256(583),
-        //     uint256(583),
-        //     uint256(583),
-        //     uint256(583),
-        //     uint256(583),
-        //     uint256(583),
-        //     uint256(125),
-        //     uint256(125),
-        //     uint256(125),
-        //     uint256(125),
-        //     uint256(500)
-        // ];
-
-        // for (uint16 p = 0; p < SWPoolPercentage[GEN].length; p++) {
-        //     uint256 qtyItem = (100 * SWPoolPercentage[GEN][p]) /
-        //         10000;
-        //     for (uint16 i = 0; i < qtyItem; i++) {
-        //         SWPoolValues[GEN].push(
-        //             SWPoolResults[GEN][p]
-        //         );
-        //     }
-        // }
-
-        // SWPoolResults[WEAP] = [0, 1, 2, 3];
-        // SWPoolPercentage[WEAP] = [
-        //     uint256(2500),
-        //     uint256(2500),
-        //     uint256(2500),
-        //     uint256(2500)
-        // ];
-        // for (uint16 p = 0; p < SWPoolPercentage[WEAP].length; p++) {
-        //     uint256 qtyItem = (100 * SWPoolPercentage[WEAP][p]) /
-        //         10000;
-        //     for (uint16 i = 0; i < qtyItem; i++) {
-        //         SWPoolValues[WEAP].push(
-        //             SWPoolResults[WEAP][p]
-        //         );
-        //     }
-        // }
 
         //-----------------END COMMON BOX RATE --------------------------------
     }
@@ -318,11 +152,10 @@ contract RandomRateLTD is Ownable {
         return EPool[_number];
     }
 
-    function getSpaceWarriorPool(uint16 _part, uint16 _number)
-        public
-        view
-        returns (uint16)
-    {
+    function getSpaceWarriorPool(
+        uint16 _part,
+        uint16 _number
+    ) public view returns (uint16) {
         uint16 _modNumber = uint16(_number) %
             uint16(SWPoolValues[_part].length);
         return SWPoolValues[_part][_modNumber];

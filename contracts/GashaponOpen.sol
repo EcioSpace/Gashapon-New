@@ -79,8 +79,11 @@ contract GashaponOpener is Ownable {
     address public randomWorkerContract;
     address public ecioTokenContract;
 
-    uint256 public stdGashaPrice = 25000 * 10e18;
-    uint256 public promoGashaPrice = 9500 * 10e18;
+    uint256 public stdGashaPrice = 25000 * 10**18;
+    uint256 public promoGashaPrice = 9500 * 10**18;
+
+    uint256 public ltdStartTime = 1642770000;
+    uint256 public ltdEndTime = 1642957200;
 
     enum randomRateType {
         STD,
@@ -121,6 +124,16 @@ contract GashaponOpener is Ownable {
     function changeRandomRateLTD(address _address) public onlyOwner {
         randomRateAddress[randomRateType.LTD] = _address;
         emit ChangeRandomRateContract(_address);
+    }
+
+    function changeLtdStartTime(uint256 newtime) public onlyOwner {
+        ltdStartTime = newtime;
+        emit ChangeLtdStartTime(newtime);
+    }
+
+    function changeLtdEndTime(uint256 newtime) public onlyOwner {
+        ltdEndTime = newtime;
+        emit ChangeLtdEndTime(newtime);
     }
 
     function generateNFT(randomRateType _RandomType) internal {
@@ -242,36 +255,40 @@ contract GashaponOpener is Ownable {
         uint16 battleBotId = getNumberAndMod(_randomNumber, 6, 1000);
         uint16 humanGenomeId = getNumberAndMod(_randomNumber, 7, 1000);
         uint16 weaponId = getNumberAndMod(_randomNumber, 8, 1000);
-       
+
         string memory concatedCode = convertCodeToStr(6);
+
         concatedCode = concateCode(concatedCode, 0); //kingdomCode
         concatedCode = concateCode(
             concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(TRANING_CAMP, trainingId)
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
+                TRANING_CAMP,
+                trainingId
+            )
+        );
+        concatedCode = concateCode(concatedCode, 0);
+        concatedCode = concateCode(concatedCode, 0);
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
+                SUITE,
+                battleSuiteId
+            )
+        );
+        concatedCode = concateCode(concatedCode, 0);
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
+                GEN,
+                humanGenomeId
+            )
         );
         concatedCode = concateCode(
             concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(GEAR, battleGearId)
-        );
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(DRO, battleDroneId)
-        );
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(SUITE, battleSuiteId)
-        );
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(BOT, battleBotId)
-        );
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(GEN, humanGenomeId)
-        );
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(WEAP, weaponId)
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
+                WEAP,
+                weaponId
+            )
         );
         concatedCode = concateCode(concatedCode, 0); //Star
         concatedCode = concateCode(concatedCode, 0); //equipmentCode
