@@ -242,40 +242,36 @@ contract GashaponOpener is Ownable {
         uint16 battleBotId = getNumberAndMod(_randomNumber, 6, 1000);
         uint16 humanGenomeId = getNumberAndMod(_randomNumber, 7, 1000);
         uint16 weaponId = getNumberAndMod(_randomNumber, 8, 1000);
-
+       
         string memory concatedCode = convertCodeToStr(6);
-
         concatedCode = concateCode(concatedCode, 0); //kingdomCode
         concatedCode = concateCode(
             concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
-                TRANING_CAMP,
-                trainingId
-            )
-        );
-        concatedCode = concateCode(concatedCode, 0);
-        concatedCode = concateCode(concatedCode, 0);
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
-                SUITE,
-                battleSuiteId
-            )
-        );
-        concatedCode = concateCode(concatedCode, 0);
-        concatedCode = concateCode(
-            concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
-                GEN,
-                humanGenomeId
-            )
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(TRANING_CAMP, trainingId)
         );
         concatedCode = concateCode(
             concatedCode,
-            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(
-                WEAP,
-                weaponId
-            )
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(GEAR, battleGearId)
+        );
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(DRO, battleDroneId)
+        );
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(SUITE, battleSuiteId)
+        );
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(BOT, battleBotId)
+        );
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(GEN, humanGenomeId)
+        );
+        concatedCode = concateCode(
+            concatedCode,
+            RANDOM_RATE(randomRateAddress[_RandomType]).getSpaceWarriorPool(WEAP, weaponId)
         );
         concatedCode = concateCode(concatedCode, 0); //Star
         concatedCode = concateCode(concatedCode, 0); //equipmentCode
