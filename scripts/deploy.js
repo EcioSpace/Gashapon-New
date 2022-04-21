@@ -14,7 +14,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const contractNames = ["RandomRateLTD", "RandomRateSTD"];
+  const contractNames = ["RandomRateSTD"];
 
   for (var i=0; i < contractNames.length; i++) {
   const Contracts = await hre.ethers.getContractFactory(contractNames[i]);

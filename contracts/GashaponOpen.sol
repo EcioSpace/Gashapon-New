@@ -35,7 +35,7 @@ interface RANDOM_RATE {
         returns (uint16);
 }
 
-contract GashaponOpener is Ownable {
+contract ECIOGachaOpener is Ownable {
     using Strings for string;
     uint16 private constant NFT_TYPE = 0; //Kingdom
     uint16 private constant KINGDOM = 1; //Kingdom
@@ -62,9 +62,6 @@ contract GashaponOpener is Ownable {
     uint16 private constant RARE = 1;
     uint16 private constant EPIC = 2;
 
-    mapping(uint256 => address) ranNumToSender;
-    mapping(uint256 => uint256) requestToNFTId;
-
     event OpenBox(address _by, string partCode);
     event ChangeRandomRateContract(address _address);
     event ChangeMysteryBoxContract(address _address);
@@ -74,16 +71,12 @@ contract GashaponOpener is Ownable {
     event ChangeLtdStartTime(uint256 time);
     event ChangeLtdEndTime(uint256 time);
 
-    address public mysteryBoxContract;
     address public nftCoreContract;
     address public randomWorkerContract;
     address public ecioTokenContract;
 
-    uint256 public stdGashaPrice = 25000 * 10**18;
-    uint256 public promoGashaPrice = 9500 * 10**18;
-
-    uint256 public ltdStartTime = 1642770000;
-    uint256 public ltdEndTime = 1642957200;
+    uint256 public stdGashaPrice = 24900 * 1e18;
+    uint256 public promoGashaPrice = 9500 * 1e18;
 
     enum randomRateType {
         STD,
@@ -104,11 +97,6 @@ contract GashaponOpener is Ownable {
         emit ChangeRandomWorkerContract(_address);
     }
 
-    function changeMysteryBoxContract(address _address) public onlyOwner {
-        mysteryBoxContract = _address;
-        emit ChangeMysteryBoxContract(_address);
-    }
-
     function changeNftCoreContract(address _address) public onlyOwner {
         nftCoreContract = _address;
         emit ChangeNftCoreContract(_address);
@@ -126,14 +114,13 @@ contract GashaponOpener is Ownable {
         emit ChangeRandomRateContract(_address);
     }
 
-    function changeLtdStartTime(uint256 newtime) public onlyOwner {
-        ltdStartTime = newtime;
-        emit ChangeLtdStartTime(newtime);
+    //change Price
+    function changeStdGashaPrice(uint256 newAmount) public onlyOwner {
+        stdGashaPrice = newAmount;
     }
 
-    function changeLtdEndTime(uint256 newtime) public onlyOwner {
-        ltdEndTime = newtime;
-        emit ChangeLtdEndTime(newtime);
+    function changePromoGashaPrice(uint256 newAmount) public onlyOwner {
+        promoGashaPrice = newAmount;
     }
 
     function generateNFT(randomRateType _RandomType) internal {
@@ -249,10 +236,10 @@ contract GashaponOpener is Ownable {
     {
         // adjust digit to random partcode
         uint16 trainingId = getNumberAndMod(_randomNumber, 2, 1000);
-        uint16 battleGearId = getNumberAndMod(_randomNumber, 3, 1000);
-        uint16 battleDroneId  = getNumberAndMod(_randomNumber, 4, 1000);
+        // uint16 battleGearId = getNumberAndMod(_randomNumber, 3, 1000);
+        // uint16 battleDroneId  = getNumberAndMod(_randomNumber, 4, 1000);
         uint16 battleSuiteId = getNumberAndMod(_randomNumber, 5, 1000);
-        uint16 battleBotId = getNumberAndMod(_randomNumber, 6, 1000);
+        // uint16 battleBotId = getNumberAndMod(_randomNumber, 6, 1000);
         uint16 humanGenomeId = getNumberAndMod(_randomNumber, 7, 1000);
         uint16 weaponId = getNumberAndMod(_randomNumber, 8, 1000);
 
@@ -323,9 +310,17 @@ contract GashaponOpener is Ownable {
 
     /************************* MANAGEMENT FUNC *****************************/
 
-    //transfer token to burn address
-    function transfer(address _to, uint256 _amount) public onlyOwner {
-        IERC20 _token = IERC20(ecioTokenContract);
+    function transferFee(address payable _to, uint _amount) public onlyOwner {
+        (bool success, ) = _to.call{value: _amount}("");
+        require(success, "Failed to send Ether");
+    }
+
+    function transferToken(
+        address _contractAddress,
+        address _to,
+        uint256 _amount
+    ) public onlyOwner {
+        IERC20 _token = IERC20(_contractAddress);
         _token.transfer(_to, _amount);
     }
 }

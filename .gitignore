@@ -8,3 +8,7 @@ secrets.json
 #Hardhat files
 cache
 artifacts
+ECIONFTCore.sol
+ECIOTest.sol
+gasha.sol
+RandomWorker.sol
